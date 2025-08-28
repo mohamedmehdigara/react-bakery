@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './style.css';
+import "./style.css";
 
 // Use a simple data structure for the bakery products.
 const productsData = [
@@ -9,7 +9,8 @@ const productsData = [
     type: 'sweet',
     description: 'A delicate and warm bread with rich swirls of cinnamon and sugar.',
     longDescription: 'Our signature Cinnamon Swirl is made with a secret family recipe. Each loaf is hand-braided and generously filled with a blend of ground cinnamon and brown sugar, creating a perfect balance of sweetness and spice. It\'s the perfect treat for breakfast or a cozy afternoon.',
-    imageUrl: 'https://placehold.co/600x450/ffedd5/634f3b?text=Cinnamon+Swirl'
+    imageUrl: 'https://placehold.co/600x450/ffedd5/634f3b?text=Cinnamon+Swirl',
+    price: 4.50
   },
   {
     id: 2,
@@ -17,7 +18,8 @@ const productsData = [
     type: 'salty',
     description: 'Crusty on the outside, soft and chewy on the inside. Perfect for sandwiches.',
     longDescription: 'Slow-fermented for over 24 hours, our Artisan Sourdough develops a deep, tangy flavor and a satisfyingly crunchy crust. Its airy interior is ideal for soaking up soups or pairing with your favorite cheeses.',
-    imageUrl: 'https://placehold.co/600x450/e9d8a6/634f3b?text=Sourdough'
+    imageUrl: 'https://placehold.co/600x450/e9d8a6/634f3b?text=Sourdough',
+    price: 6.00
   },
   {
     id: 3,
@@ -25,7 +27,8 @@ const productsData = [
     type: 'sweet',
     description: 'Buttery, soft brioche filled with chunks of decadent dark chocolate.',
     longDescription: 'This decadent Brioche is a true indulgence. We use premium butter and eggs to create a rich, tender crumb, then fold in generous chunks of high-quality dark chocolate that melt perfectly when baked.',
-    imageUrl: 'https://placehold.co/600x450/fecaca/634f3b?text=Chocolate+Brioche'
+    imageUrl: 'https://placehold.co/600x450/fecaca/634f3b?text=Chocolate+Brioche',
+    price: 5.50
   },
   {
     id: 4,
@@ -33,7 +36,8 @@ const productsData = [
     type: 'salty',
     description: 'A savory classic with a hint of fresh rosemary and flaky sea salt.',
     longDescription: 'A timeless savory bread, this loaf is infused with fresh rosemary and topped with large flakes of sea salt. Its aromatic flavor makes it a wonderful companion for olive oil dipping or as a base for bruschetta.',
-    imageUrl: 'https://placehold.co/600x450/dbeafe/634f3b?text=Rosemary+Bread'
+    imageUrl: 'https://placehold.co/600x450/dbeafe/634f3b?text=Rosemary+Bread',
+    price: 5.00
   },
   {
     id: 5,
@@ -41,7 +45,8 @@ const productsData = [
     type: 'sweet',
     description: 'Light and zesty bread with a refreshing lemon glaze and poppy seeds.',
     longDescription: 'Our Lemon Poppy Seed bread is a burst of sunshine in every bite. The bright, citrusy flavor from fresh lemons is balanced by the subtle crunch of poppy seeds and topped with a sweet, tangy glaze.',
-    imageUrl: 'https://placehold.co/600x450/fef08a/634f3b?text=Lemon+Bread'
+    imageUrl: 'https://placehold.co/600x450/fef08a/634f3b?text=Lemon+Bread',
+    price: 4.75
   },
   {
     id: 6,
@@ -49,12 +54,48 @@ const productsData = [
     type: 'salty',
     description: 'Soft, airy Italian bread topped with juicy olives and herbs.',
     longDescription: 'A taste of the Mediterranean! Our Focaccia is incredibly soft and dimpled, drizzled with olive oil, and studded with flavorful kalamata olives and a sprinkle of dried herbs. It\'s perfect for sharing with friends.',
-    imageUrl: 'https://placehold.co/600x450/bfdbfe/634f3b?text=Focaccia'
+    imageUrl: 'https://placehold.co/600x450/bfdbfe/634f3b?text=Focaccia',
+    price: 5.25
   },
 ];
 
+// Shopping cart component
+const ShoppingCart = ({ cart, onClearCart }) => {
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  return (
+    <div className="shopping-cart-container">
+      <h2 className="cart-title">Your Cart</h2>
+      {cart.length === 0 ? (
+        <p className="empty-cart-text">Your cart is empty.</p>
+      ) : (
+        <>
+          <ul className="cart-list">
+            {cart.map(item => (
+              <li key={item.id} className="cart-item">
+                <span className="cart-item-name">{item.name}</span>
+                <span className="cart-item-details">
+                  {item.quantity} x ${item.price.toFixed(2)}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <div className="cart-summary">
+            <span className="cart-total-label">Total:</span>
+            <span className="cart-total-value">${total.toFixed(2)}</span>
+          </div>
+          <button onClick={onClearCart} className="button clear-cart-button">
+            Clear Cart
+          </button>
+        </>
+      )}
+    </div>
+  );
+};
+
+
 // ProductCard component to display a single product.
-const ProductCard = ({ product, onViewDetails }) => {
+const ProductCard = ({ product, onViewDetails, onAddToCart }) => {
   return (
     <div className="product-card">
       <img
@@ -72,6 +113,12 @@ const ProductCard = ({ product, onViewDetails }) => {
           >
             View Details
           </button>
+          <button
+            onClick={() => onAddToCart(product)}
+            className="button add-to-cart-button-card"
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
     </div>
@@ -79,7 +126,7 @@ const ProductCard = ({ product, onViewDetails }) => {
 };
 
 // New component for displaying product details.
-const ProductDetail = ({ product, onBack }) => {
+const ProductDetail = ({ product, onBack, onAddToCart }) => {
   return (
     <div className="product-detail-container">
       <button
@@ -102,8 +149,8 @@ const ProductDetail = ({ product, onBack }) => {
           <p className="product-detail-subtitle">{product.description}</p>
           <p className="product-detail-text">{product.longDescription}</p>
           <div className="product-detail-actions">
-            <button className="button add-to-cart-button">
-              Add to Cart
+            <button onClick={() => onAddToCart(product)} className="button add-to-cart-button">
+              Add to Cart - ${product.price.toFixed(2)}
             </button>
           </div>
         </div>
@@ -116,6 +163,7 @@ const ProductDetail = ({ product, onBack }) => {
 const App = () => {
   const [activeTab, setActiveTab] = useState('all');
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [cart, setCart] = useState([]);
 
   // Filter products based on the active tab
   const filteredProducts = productsData.filter(product => {
@@ -135,10 +183,31 @@ const App = () => {
     setSelectedProduct(null);
   };
 
+  // Function to add a product to the cart
+  const handleAddToCart = (product) => {
+    setCart(prevCart => {
+      const existingItem = prevCart.find(item => item.id === product.id);
+      if (existingItem) {
+        return prevCart.map(item =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        return [...prevCart, { ...product, quantity: 1 }];
+      }
+    });
+  };
+
+  // Function to clear the cart
+  const handleClearCart = () => {
+    setCart([]);
+  };
+
   // Conditionally render the product detail page or the main list
   const renderContent = () => {
     if (selectedProduct) {
-      return <ProductDetail product={selectedProduct} onBack={handleGoBack} />;
+      return <ProductDetail product={selectedProduct} onBack={handleGoBack} onAddToCart={handleAddToCart} />;
     }
 
     return (
@@ -168,7 +237,7 @@ const App = () => {
         {/* Products Grid */}
         <section className="products-grid">
           {filteredProducts.map(product => (
-            <ProductCard key={product.id} product={product} onViewDetails={handleViewDetails} />
+            <ProductCard key={product.id} product={product} onViewDetails={handleViewDetails} onAddToCart={handleAddToCart} />
           ))}
         </section>
       </>
@@ -189,6 +258,7 @@ const App = () => {
       <main className="main-content">
         <div className="container">
           {renderContent()}
+          {cart.length > 0 && <ShoppingCart cart={cart} onClearCart={handleClearCart} />}
         </div>
       </main>
 
