@@ -4,6 +4,9 @@ import "./style.css";
 
 
 // Use a simple data structure for the bakery products.
+
+
+// Use a simple data structure for the bakery products.
 const productsData = [
   {
     id: 1,
@@ -103,6 +106,42 @@ const productsData = [
     longDescription: 'This is the perfect autumn treat, blending the sweetness of fresh apple pieces with the warmth of cinnamon. The soft, doughy bread is filled with a spiced apple mixture that creates a moist and flavorful swirl.',
     imageUrl: 'https://placehold.co/600x450/fef08a/634f3b?text=Apple+Bread',
     price: 5.00
+  },
+  {
+    id: 12,
+    name: 'Jalapeño Cheddar Cornbread',
+    type: 'savory',
+    description: 'A spicy and cheesy bread with a soft, moist texture.',
+    longDescription: 'A savory twist on a classic, our Jalapeño Cheddar Cornbread is baked with a generous amount of sharp cheddar and finely diced jalapeños. The result is a moist, flavorful bread with a gentle kick of heat that complements a wide range of dishes.',
+    imageUrl: 'https://placehold.co/600x450/ffe4e6/634f3b?text=Jalapeño+Cornbread',
+    price: 5.75
+  },
+  {
+    id: 13,
+    name: 'Sun-dried Tomato & Basil Focaccia',
+    type: 'savory',
+    description: 'A soft Italian bread bursting with Mediterranean flavors.',
+    longDescription: 'This Focaccia is a taste of Italy, infused with the rich, intense flavor of sun-dried tomatoes and the aromatic freshness of basil. It has a beautiful, airy crumb and a crispy, olive oil-drizzled crust. Perfect for dipping or as a sandwich bread.',
+    imageUrl: 'https://placehold.co/600x450/fff0f7/634f3b?text=Tomato+Basil+Focaccia',
+    price: 5.50
+  },
+  {
+    id: 14,
+    name: 'Gluten-Free Seed Loaf',
+    type: 'dietary',
+    description: 'A dense and hearty loaf packed with a variety of healthy seeds.',
+    longDescription: 'Our Gluten-Free Seed Loaf is a delicious and wholesome alternative for those with dietary restrictions. It is made without wheat flour but is still rich in fiber and protein thanks to a generous mix of flax, sunflower, and pumpkin seeds. It has a delightful nutty flavor and a satisfying chewiness.',
+    imageUrl: 'https://placehold.co/600x450/f5f5f4/634f3b?text=GF+Seed+Loaf',
+    price: 7.00
+  },
+  {
+    id: 15,
+    name: 'Vegan Banana Walnut Bread',
+    type: 'dietary',
+    description: 'A moist and flavorful plant-based banana bread with walnuts.',
+    longDescription: 'This is a vegan version of our classic banana bread, made with a special blend of plant-based ingredients to ensure a moist and tender loaf. We\'ve added crunchy walnuts to complement the natural sweetness of the ripe bananas.',
+    imageUrl: 'https://placehold.co/600x450/fcf3d0/634f3b?text=Vegan+Banana+Bread',
+    price: 6.25
   },
 ];
 
@@ -382,6 +421,18 @@ const App = () => {
             className={`nav-button ${activeTab === 'fruit' ? 'active' : ''}`}
           >
             Fruit Breads
+          </button>
+          <button
+            onClick={() => setActiveTab('savory')}
+            className={`nav-button ${activeTab === 'savory' ? 'active' : ''}`}
+          >
+            Savory Breads
+          </button>
+          <button
+            onClick={() => setActiveTab('dietary')}
+            className={`nav-button ${activeTab === 'dietary' ? 'active' : ''}`}
+          >
+            Gluten-Free & Vegan
           </button>
         </nav>
 
