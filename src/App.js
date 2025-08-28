@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import "./style.css";
+// Use a simple data structure for the bakery products.
+
 
 // Use a simple data structure for the bakery products.
 const productsData = [
@@ -57,10 +59,55 @@ const productsData = [
     imageUrl: 'https://placehold.co/600x450/bfdbfe/634f3b?text=Focaccia',
     price: 5.25
   },
+  {
+    id: 7,
+    name: 'Cardamom Bun',
+    type: 'sweet',
+    description: 'A fragrant Swedish-style bun with a delicate, spiced filling.',
+    longDescription: 'Our Cardamom Buns are a true taste of Scandinavia. Soft, pillowy dough is swirled with a fragrant paste of ground cardamom and sugar, finished with a sprinkle of pearl sugar for a delightful crunch.',
+    imageUrl: 'https://placehold.co/600x450/fff7ed/634f3b?text=Cardamom+Bun',
+    price: 4.25
+  },
+  {
+    id: 8,
+    name: 'Multigrain Loaf',
+    type: 'salty',
+    description: 'A hearty, dense loaf packed with a mix of seeds and grains.',
+    longDescription: 'This wholesome Multigrain Loaf is a perfect everyday bread. It\'s made with a blend of whole wheat flour and a generous mix of sunflower, flax, and sesame seeds, giving it a rich texture and nutty flavor.',
+    imageUrl: 'https://placehold.co/600x450/f0f9ff/634f3b?text=Multigrain+Loaf',
+    price: 6.50
+  },
+  {
+    id: 9,
+    name: 'Citron Bread',
+    type: 'fruit',
+    description: 'A zesty and bright bread with candied citron.',
+    longDescription: 'Our refreshing Citron Bread is a celebration of citrus flavor. We use a blend of fresh lemon zest and sweet candied citron peel to create a loaf that is both aromatic and tangy, perfect for a light dessert or afternoon tea.',
+    imageUrl: 'https://placehold.co/600x450/fff7ed/634f3b?text=Citron+Bread',
+    price: 4.75
+  },
+  {
+    id: 10,
+    name: 'Banana Bread',
+    type: 'fruit',
+    description: 'A moist, classic loaf with a rich banana flavor.',
+    longDescription: 'A timeless favorite, our Banana Bread is made with perfectly ripened bananas for a naturally sweet and moist texture. The simple yet comforting flavor makes it a perfect snack or a quick breakfast on the go.',
+    imageUrl: 'https://placehold.co/600x450/fde047/634f3b?text=Banana+Bread',
+    price: 4.50
+  },
+  {
+    id: 11,
+    name: 'Apple Cinnamon Swirl',
+    type: 'fruit',
+    description: 'A comforting bread with pieces of apple and cinnamon.',
+    longDescription: 'This is the perfect autumn treat, blending the sweetness of fresh apple pieces with the warmth of cinnamon. The soft, doughy bread is filled with a spiced apple mixture that creates a moist and flavorful swirl.',
+    imageUrl: 'https://placehold.co/600x450/fef08a/634f3b?text=Apple+Bread',
+    price: 5.00
+  },
 ];
 
 // Shopping cart component
-const ShoppingCart = ({ cart, onClearCart }) => {
+const ShoppingCart = ({ cart, onClearCart, onCheckout }) => {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
@@ -84,11 +131,79 @@ const ShoppingCart = ({ cart, onClearCart }) => {
             <span className="cart-total-label">Total:</span>
             <span className="cart-total-value">${total.toFixed(2)}</span>
           </div>
-          <button onClick={onClearCart} className="button clear-cart-button">
-            Clear Cart
+          <button onClick={onCheckout} className="button checkout-button">
+            Proceed to Checkout
           </button>
         </>
       )}
+    </div>
+  );
+};
+
+// Checkout Form component
+const CheckoutForm = ({ cart, onPlaceOrder, onBack }) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // In a real app, this would send data to a server.
+    // For this example, we'll just "place the order"
+    onPlaceOrder();
+  };
+
+  return (
+    <div className="checkout-form-container">
+      <button onClick={onBack} className="button back-button">
+        <svg xmlns="http://www.w3.org/2000/svg" className="back-icon" viewBox="0 0 20 20" fill="currentColor">
+          <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+        </svg>
+        Go Back
+      </button>
+      <h2 className="checkout-title">Checkout</h2>
+      <div className="order-summary-box">
+        <h3 className="summary-title">Order Summary</h3>
+        <ul className="summary-list">
+          {cart.map(item => (
+            <li key={item.id} className="summary-item">
+              <span className="summary-item-name">{item.name}</span>
+              <span className="summary-item-details">
+                {item.quantity} x ${item.price.toFixed(2)}
+              </span>
+            </li>
+          ))}
+        </ul>
+        <div className="summary-total">
+          <span className="summary-total-label">Total:</span>
+          <span className="summary-total-value">${total.toFixed(2)}</span>
+        </div>
+      </div>
+      <form onSubmit={handleSubmit} className="checkout-form">
+        <label className="form-label">
+          Full Name:
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            className="form-input"
+          />
+        </label>
+        <label className="form-label">
+          Email:
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="form-input"
+          />
+        </label>
+        <button type="submit" className="button place-order-button">
+          Place Order
+        </button>
+      </form>
     </div>
   );
 };
@@ -164,6 +279,8 @@ const App = () => {
   const [activeTab, setActiveTab] = useState('all');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cart, setCart] = useState([]);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [isOrderPlaced, setIsOrderPlaced] = useState(false);
 
   // Filter products based on the active tab
   const filteredProducts = productsData.filter(product => {
@@ -181,6 +298,8 @@ const App = () => {
   // Function to go back to the product list
   const handleGoBack = () => {
     setSelectedProduct(null);
+    setIsCheckingOut(false);
+    setIsOrderPlaced(false);
   };
 
   // Function to add a product to the cart
@@ -204,8 +323,34 @@ const App = () => {
     setCart([]);
   };
 
+  const handleCheckout = () => {
+    setIsCheckingOut(true);
+  };
+
+  const handlePlaceOrder = () => {
+    setCart([]);
+    setIsCheckingOut(false);
+    setIsOrderPlaced(true);
+  };
+
   // Conditionally render the product detail page or the main list
   const renderContent = () => {
+    if (isOrderPlaced) {
+      return (
+        <div className="order-confirmation">
+          <h2 className="order-confirmation-title">Order Placed!</h2>
+          <p className="order-confirmation-text">Thank you for your order. We'll send you an email confirmation shortly.</p>
+          <button onClick={handleGoBack} className="button back-button">
+            Go Back to Products
+          </button>
+        </div>
+      );
+    }
+
+    if (isCheckingOut) {
+      return <CheckoutForm cart={cart} onPlaceOrder={handlePlaceOrder} onBack={handleGoBack} />;
+    }
+
     if (selectedProduct) {
       return <ProductDetail product={selectedProduct} onBack={handleGoBack} onAddToCart={handleAddToCart} />;
     }
@@ -231,6 +376,12 @@ const App = () => {
             className={`nav-button ${activeTab === 'salty' ? 'active' : ''}`}
           >
             Salty Breads
+          </button>
+          <button
+            onClick={() => setActiveTab('fruit')}
+            className={`nav-button ${activeTab === 'fruit' ? 'active' : ''}`}
+          >
+            Fruit Breads
           </button>
         </nav>
 
@@ -258,7 +409,7 @@ const App = () => {
       <main className="main-content">
         <div className="container">
           {renderContent()}
-          {cart.length > 0 && <ShoppingCart cart={cart} onClearCart={handleClearCart} />}
+          {cart.length > 0 && !isCheckingOut && !isOrderPlaced && <ShoppingCart cart={cart} onClearCart={handleClearCart} onCheckout={handleCheckout} />}
         </div>
       </main>
 
