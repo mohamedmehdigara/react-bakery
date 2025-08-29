@@ -7,7 +7,7 @@ import "./style.css";
 
 
 // Use a simple data structure for the bakery products.
-const productsData = [
+const initialProductsData = [
   {
     id: 1,
     name: 'Cinnamon Swirl',
@@ -15,7 +15,11 @@ const productsData = [
     description: 'A delicate and warm bread with rich swirls of cinnamon and sugar.',
     longDescription: 'Our signature Cinnamon Swirl is made with a secret family recipe. Each loaf is hand-braided and generously filled with a blend of ground cinnamon and brown sugar, creating a perfect balance of sweetness and spice. It\'s the perfect treat for breakfast or a cozy afternoon.',
     imageUrl: 'https://placehold.co/600x450/ffedd5/634f3b?text=Cinnamon+Swirl',
-    price: 4.50
+    price: 4.50,
+    reviews: [
+        { name: 'Jane D.', rating: 5, comment: ' The best cinnamon bread I have ever tasted.' },
+        { name: 'Mark S.', rating: 4, comment: 'Very good, but a little too sweet for my taste.' }
+    ]
   },
   {
     id: 2,
@@ -24,7 +28,10 @@ const productsData = [
     description: 'Crusty on the outside, soft and chewy on the inside. Perfect for sandwiches.',
     longDescription: 'Slow-fermented for over 24 hours, our Artisan Sourdough develops a deep, tangy flavor and a satisfyingly crunchy crust. Its airy interior is ideal for soaking up soups or pairing with your favorite cheeses.',
     imageUrl: 'https://placehold.co/600x450/e9d8a6/634f3b?text=Sourdough',
-    price: 6.00
+    price: 6.00,
+    reviews: [
+        { name: 'Sarah L.', rating: 5, comment: 'My go-to bread. The crust is perfect.' },
+    ]
   },
   {
     id: 3,
@@ -33,7 +40,8 @@ const productsData = [
     description: 'Buttery, soft brioche filled with chunks of decadent dark chocolate.',
     longDescription: 'This decadent Brioche is a true indulgence. We use premium butter and eggs to create a rich, tender crumb, then fold in generous chunks of high-quality dark chocolate that melt perfectly when baked.',
     imageUrl: 'https://placehold.co/600x450/fecaca/634f3b?text=Chocolate+Brioche',
-    price: 5.50
+    price: 5.50,
+    reviews: []
   },
   {
     id: 4,
@@ -42,7 +50,8 @@ const productsData = [
     description: 'A savory classic with a hint of fresh rosemary and flaky sea salt.',
     longDescription: 'A timeless savory bread, this loaf is infused with fresh rosemary and topped with large flakes of sea salt. Its aromatic flavor makes it a wonderful companion for olive oil dipping or as a base for bruschetta.',
     imageUrl: 'https://placehold.co/600x450/dbeafe/634f3b?text=Rosemary+Bread',
-    price: 5.00
+    price: 5.00,
+    reviews: []
   },
   {
     id: 5,
@@ -51,7 +60,8 @@ const productsData = [
     description: 'Light and zesty bread with a refreshing lemon glaze and poppy seeds.',
     longDescription: 'Our Lemon Poppy Seed bread is a burst of sunshine in every bite. The bright, citrusy flavor from fresh lemons is balanced by the subtle crunch of poppy seeds and topped with a sweet, tangy glaze.',
     imageUrl: 'https://placehold.co/600x450/fef08a/634f3b?text=Lemon+Bread',
-    price: 4.75
+    price: 4.75,
+    reviews: []
   },
   {
     id: 6,
@@ -60,7 +70,8 @@ const productsData = [
     description: 'Soft, airy Italian bread topped with juicy olives and herbs.',
     longDescription: 'A taste of the Mediterranean! Our Focaccia is incredibly soft and dimpled, drizzled with olive oil, and studded with flavorful kalamata olives and a sprinkle of dried herbs. It\'s perfect for sharing with friends.',
     imageUrl: 'https://placehold.co/600x450/bfdbfe/634f3b?text=Focaccia',
-    price: 5.25
+    price: 5.25,
+    reviews: []
   },
   {
     id: 7,
@@ -69,7 +80,8 @@ const productsData = [
     description: 'A fragrant Swedish-style bun with a delicate, spiced filling.',
     longDescription: 'Our Cardamom Buns are a true taste of Scandinavia. Soft, pillowy dough is swirled with a fragrant paste of ground cardamom and sugar, finished with a sprinkle of pearl sugar for a delightful crunch.',
     imageUrl: 'https://placehold.co/600x450/fff7ed/634f3b?text=Cardamom+Bun',
-    price: 4.25
+    price: 4.25,
+    reviews: []
   },
   {
     id: 8,
@@ -78,7 +90,8 @@ const productsData = [
     description: 'A hearty, dense loaf packed with a mix of seeds and grains.',
     longDescription: 'This wholesome Multigrain Loaf is a perfect everyday bread. It\'s made with a blend of whole wheat flour and a generous mix of sunflower, flax, and sesame seeds, giving it a rich texture and nutty flavor.',
     imageUrl: 'https://placehold.co/600x450/f0f9ff/634f3b?text=Multigrain+Loaf',
-    price: 6.50
+    price: 6.50,
+    reviews: []
   },
   {
     id: 9,
@@ -87,7 +100,8 @@ const productsData = [
     description: 'A zesty and bright bread with candied citron.',
     longDescription: 'Our refreshing Citron Bread is a celebration of citrus flavor. We use a blend of fresh lemon zest and sweet candied citron peel to create a loaf that is both aromatic and tangy, perfect for a light dessert or afternoon tea.',
     imageUrl: 'https://placehold.co/600x450/fff7ed/634f3b?text=Citron+Bread',
-    price: 4.75
+    price: 4.75,
+    reviews: []
   },
   {
     id: 10,
@@ -96,7 +110,8 @@ const productsData = [
     description: 'A moist, classic loaf with a rich banana flavor.',
     longDescription: 'A timeless favorite, our Banana Bread is made with perfectly ripened bananas for a naturally sweet and moist texture. The simple yet comforting flavor makes it a perfect snack or a quick breakfast on the go.',
     imageUrl: 'https://placehold.co/600x450/fde047/634f3b?text=Banana+Bread',
-    price: 4.50
+    price: 4.50,
+    reviews: []
   },
   {
     id: 11,
@@ -105,7 +120,8 @@ const productsData = [
     description: 'A comforting bread with pieces of apple and cinnamon.',
     longDescription: 'This is the perfect autumn treat, blending the sweetness of fresh apple pieces with the warmth of cinnamon. The soft, doughy bread is filled with a spiced apple mixture that creates a moist and flavorful swirl.',
     imageUrl: 'https://placehold.co/600x450/fef08a/634f3b?text=Apple+Bread',
-    price: 5.00
+    price: 5.00,
+    reviews: []
   },
   {
     id: 12,
@@ -114,7 +130,8 @@ const productsData = [
     description: 'A spicy and cheesy bread with a soft, moist texture.',
     longDescription: 'A savory twist on a classic, our Jalapeño Cheddar Cornbread is baked with a generous amount of sharp cheddar and finely diced jalapeños. The result is a moist, flavorful bread with a gentle kick of heat that complements a wide range of dishes.',
     imageUrl: 'https://placehold.co/600x450/ffe4e6/634f3b?text=Jalapeño+Cornbread',
-    price: 5.75
+    price: 5.75,
+    reviews: []
   },
   {
     id: 13,
@@ -123,7 +140,8 @@ const productsData = [
     description: 'A soft Italian bread bursting with Mediterranean flavors.',
     longDescription: 'This Focaccia is a taste of Italy, infused with the rich, intense flavor of sun-dried tomatoes and the aromatic freshness of basil. It has a beautiful, airy crumb and a crispy, olive oil-drizzled crust. Perfect for dipping or as a sandwich bread.',
     imageUrl: 'https://placehold.co/600x450/fff0f7/634f3b?text=Tomato+Basil+Focaccia',
-    price: 5.50
+    price: 5.50,
+    reviews: []
   },
   {
     id: 14,
@@ -132,7 +150,8 @@ const productsData = [
     description: 'A dense and hearty loaf packed with a variety of healthy seeds.',
     longDescription: 'Our Gluten-Free Seed Loaf is a delicious and wholesome alternative for those with dietary restrictions. It is made without wheat flour but is still rich in fiber and protein thanks to a generous mix of flax, sunflower, and pumpkin seeds. It has a delightful nutty flavor and a satisfying chewiness.',
     imageUrl: 'https://placehold.co/600x450/f5f5f4/634f3b?text=GF+Seed+Loaf',
-    price: 7.00
+    price: 7.00,
+    reviews: []
   },
   {
     id: 15,
@@ -141,7 +160,8 @@ const productsData = [
     description: 'A moist and flavorful plant-based banana bread with walnuts.',
     longDescription: 'This is a vegan version of our classic banana bread, made with a special blend of plant-based ingredients to ensure a moist and tender loaf. We\'ve added crunchy walnuts to complement the natural sweetness of the ripe bananas.',
     imageUrl: 'https://placehold.co/600x450/fcf3d0/634f3b?text=Vegan+Banana+Bread',
-    price: 6.25
+    price: 6.25,
+    reviews: []
   },
 ];
 
@@ -280,7 +300,7 @@ const ProductCard = ({ product, onViewDetails, onAddToCart }) => {
 };
 
 // New component for displaying product details.
-const ProductDetail = ({ product, onBack, onAddToCart }) => {
+const ProductDetail = ({ product, onBack, onAddToCart, addReview }) => {
   return (
     <div className="product-detail-container">
       <button
@@ -309,24 +329,134 @@ const ProductDetail = ({ product, onBack, onAddToCart }) => {
           </div>
         </div>
       </div>
+      {/* Pass the product and addReview function to the new ReviewSection component */}
+      <ReviewSection product={product} addReview={addReview} />
     </div>
   );
 };
 
+// New component for displaying and adding reviews
+const ReviewSection = ({ product, addReview }) => {
+    const [name, setName] = useState('');
+    const [rating, setRating] = useState(5);
+    const [comment, setComment] = useState('');
+    const [message, setMessage] = useState('');
+
+    const handleSubmitReview = (e) => {
+        e.preventDefault();
+        // Check if all fields are filled
+        if (!name || !comment) {
+            setMessage('Please fill out all fields.');
+            return;
+        }
+
+        // Create a new review object
+        const newReview = { name, rating, comment };
+        addReview(product.id, newReview);
+        
+        // Reset the form
+        setName('');
+        setRating(5);
+        setComment('');
+        setMessage('Thank you for your review!');
+        
+        // Clear message after 3 seconds
+        setTimeout(() => setMessage(''), 3000);
+    };
+
+    return (
+        <div className="review-section">
+            <h3 className="section-title">Customer Reviews</h3>
+            {product.reviews.length === 0 ? (
+                <p className="no-reviews-text">No reviews yet. Be the first to leave one!</p>
+            ) : (
+                <ul className="reviews-list">
+                    {product.reviews.map((review, index) => (
+                        <li key={index} className="review-item">
+                            <div className="review-header">
+                                <span className="reviewer-name">{review.name}</span>
+                                <span className="review-rating">
+                                    {/* Star rating display */}
+                                    {'⭐'.repeat(review.rating)}
+                                </span>
+                            </div>
+                            <p className="review-comment">{review.comment}</p>
+                        </li>
+                    ))}
+                </ul>
+            )}
+
+            <form onSubmit={handleSubmitReview} className="review-form">
+                <h4 className="form-title">Leave a Review</h4>
+                <div className="form-group">
+                    <label className="form-label">Your Name:</label>
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="form-input"
+                    />
+                </div>
+                <div className="form-group">
+                    <label className="form-label">Rating:</label>
+                    <select
+                        value={rating}
+                        onChange={(e) => setRating(parseInt(e.target.value))}
+                        className="form-select"
+                    >
+                        {[5, 4, 3, 2, 1].map(r => (
+                            <option key={r} value={r}>{r} Star{r > 1 && 's'}</option>
+                        ))}
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label className="form-label">Comment:</label>
+                    <textarea
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        className="form-textarea"
+                    />
+                </div>
+                <button type="submit" className="button submit-review-button">
+                    Submit Review
+                </button>
+                {message && <p className="review-message">{message}</p>}
+            </form>
+        </div>
+    );
+};
+
 // Main App component
 const App = () => {
+  // We're changing the productsData from a constant to a state variable so we can modify it
+  const [products, setProducts] = useState(initialProductsData);
   const [activeTab, setActiveTab] = useState('all');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cart, setCart] = useState([]);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  // Filter products based on the active tab
-  const filteredProducts = productsData.filter(product => {
-    if (activeTab === 'all') {
-      return true;
-    }
-    return product.type === activeTab;
+  // Function to add a new review to a product
+  const addReview = (productId, newReview) => {
+    setProducts(prevProducts => {
+        // Find the product and update its reviews array
+        const updatedProducts = prevProducts.map(product => {
+            if (product.id === productId) {
+                return { ...product, reviews: [...product.reviews, newReview] };
+            }
+            return product;
+        });
+        return updatedProducts;
+    });
+  };
+
+  // Filter products based on the active tab and search query
+  const filteredProducts = products.filter(product => {
+    const matchesTab = activeTab === 'all' || product.type === activeTab;
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          product.description.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesTab && matchesSearch;
   });
 
   // Function to handle viewing product details
@@ -339,6 +469,7 @@ const App = () => {
     setSelectedProduct(null);
     setIsCheckingOut(false);
     setIsOrderPlaced(false);
+    setSearchQuery(''); // Clear search query when going back
   };
 
   // Function to add a product to the cart
@@ -391,7 +522,8 @@ const App = () => {
     }
 
     if (selectedProduct) {
-      return <ProductDetail product={selectedProduct} onBack={handleGoBack} onAddToCart={handleAddToCart} />;
+      // Pass the addReview function to the ProductDetail component
+      return <ProductDetail product={selectedProduct} onBack={handleGoBack} onAddToCart={handleAddToCart} addReview={addReview} />;
     }
 
     return (
@@ -435,6 +567,16 @@ const App = () => {
             Gluten-Free & Vegan
           </button>
         </nav>
+
+        <div className="search-container">
+            <input
+                type="text"
+                placeholder="Search for bread..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="search-input"
+            />
+        </div>
 
         {/* Products Grid */}
         <section className="products-grid">
